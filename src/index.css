@@ -1,0 +1,384 @@
+/* ============================================
+   NavLab — Custom styles on top of Bootstrap 5
+   Dark theme · Inter font · Simple & clean
+   ============================================ */
+
+:root {
+  --nl-accent: #0dcaf0;
+  --nl-accent-rgb: 13, 202, 240;
+  --nl-purple: #7c3aed;
+  --nl-bg: #0f1117;
+  --nl-bg-card: #181b23;
+  --nl-bg-sidebar: #141720;
+  --nl-border: #2a2d38;
+  --nl-text: #e8e8ed;
+  --nl-text-muted: #8b8fa3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--nl-bg) !important;
+  color: var(--nl-text) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2d38;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3d48;
+}
+
+/* ---- Selection ---- */
+::selection {
+  background: rgba(13, 202, 240, 0.2);
+  color: var(--nl-accent);
+}
+
+/* ---- Override Bootstrap dark card ---- */
+.card {
+  background-color: var(--nl-bg-card) !important;
+  border-color: var(--nl-border) !important;
+}
+
+/* ---- Navbar overrides ---- */
+.navbar {
+  background-color: rgba(15, 17, 23, 0.92) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--nl-border);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+/* ---- Accent helpers ---- */
+.text-accent {
+  color: var(--nl-accent) !important;
+}
+
+.bg-accent {
+  background-color: var(--nl-accent) !important;
+}
+
+.border-accent {
+  border-color: var(--nl-accent) !important;
+}
+
+.text-purple {
+  color: var(--nl-purple) !important;
+}
+
+.btn-accent {
+  background: linear-gradient(135deg, var(--nl-accent), var(--nl-purple));
+  color: #fff;
+  border: none;
+  font-weight: 600;
+}
+
+.btn-accent:hover {
+  opacity: 0.9;
+  color: #fff;
+}
+
+.badge-accent {
+  background-color: rgba(var(--nl-accent-rgb), 0.15);
+  color: var(--nl-accent);
+  font-weight: 500;
+}
+
+/* ---- Gradient text ---- */
+.gradient-text {
+  background: linear-gradient(135deg, var(--nl-accent), var(--nl-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ---- Stat card ---- */
+.stat-card {
+  border: 1px solid var(--nl-border);
+  background-color: var(--nl-bg-card);
+  border-radius: 12px;
+  padding: 1.25rem;
+  transition: border-color 0.2s;
+}
+
+.stat-card:hover {
+  border-color: rgba(var(--nl-accent-rgb), 0.3);
+}
+
+.stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---- Sidebar ---- */
+.editor-sidebar {
+  width: 280px;
+  background-color: var(--nl-bg-sidebar);
+  border-right: 1px solid var(--nl-border);
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.sidebar-tab {
+  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.15s;
+  border: none;
+  background: transparent;
+  color: var(--nl-text-muted);
+}
+
+.sidebar-tab.active {
+  background-color: var(--nl-bg-card);
+  color: var(--nl-text);
+}
+
+.sidebar-tab:hover {
+  color: var(--nl-text);
+}
+
+.layer-item,
+.marker-item {
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.layer-item:hover,
+.marker-item:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.marker-item.active {
+  background-color: rgba(var(--nl-accent-rgb), 0.1);
+  outline: 1px solid rgba(var(--nl-accent-rgb), 0.2);
+}
+
+.marker-lib-item {
+  padding: 12px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--nl-border);
+  background-color: rgba(255, 255, 255, 0.02);
+  cursor: grab;
+  text-align: center;
+  transition: all 0.15s;
+}
+
+.marker-lib-item:hover {
+  border-color: rgba(var(--nl-accent-rgb), 0.3);
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.marker-lib-item:active {
+  cursor: grabbing;
+}
+
+/* ---- Section headers ---- */
+.section-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--nl-text-muted);
+}
+
+/* ---- Map overlays ---- */
+.map-overlay {
+  background: rgba(15, 17, 23, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--nl-border);
+  border-radius: 10px;
+  padding: 8px 14px;
+}
+
+/* ---- Marker pulse animation ---- */
+@keyframes marker-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+.marker-pulse-ring {
+  animation: marker-pulse 2s ease-in-out infinite;
+}
+
+/* ---- Panorama overlay controls ---- */
+.pano-control {
+  background: rgba(15, 17, 23, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--nl-border);
+  border-radius: 10px;
+  color: var(--nl-text-muted);
+  transition: all 0.15s;
+  cursor: pointer;
+}
+
+.pano-control:hover {
+  color: var(--nl-text);
+  background: rgba(15, 17, 23, 0.95);
+}
+
+/* ---- Hero section ---- */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(13, 202, 240, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 70%, rgba(124, 58, 237, 0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* ---- Feature card ---- */
+.feature-card {
+  border: 1px solid var(--nl-border);
+  background-color: var(--nl-bg-card);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.feature-card:hover {
+  border-color: rgba(var(--nl-accent-rgb), 0.25);
+  transform: translateY(-2px);
+}
+
+/* ---- Deploy card ---- */
+.deploy-card {
+  border: 1px solid var(--nl-border);
+  background-color: var(--nl-bg-card);
+  border-radius: 12px;
+  padding: 1.25rem;
+  transition: border-color 0.2s;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.deploy-card:hover {
+  border-color: rgba(var(--nl-accent-rgb), 0.25);
+  color: inherit;
+}
+
+/* ---- Activity item ---- */
+.activity-item {
+  padding: 10px 12px;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.activity-item:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* ---- Mapbox overrides ---- */
+.mapboxgl-ctrl-bottom-left,
+.mapboxgl-ctrl-bottom-right {
+  display: none !important;
+}
+
+.mapboxgl-popup-content {
+  background: var(--nl-bg-card) !important;
+  color: var(--nl-text) !important;
+  border: 1px solid var(--nl-border) !important;
+  border-radius: 10px !important;
+  padding: 12px 16px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* ---- Pannellum overrides ---- */
+.pnlm-container {
+  background: var(--nl-bg) !important;
+}
+
+.pnlm-controls-container {
+  display: none !important;
+}
+
+/* ---- Upload zone ---- */
+.upload-zone {
+  border: 2px dashed var(--nl-border);
+  border-radius: 12px;
+  padding: 2.5rem;
+  text-align: center;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+
+.upload-zone:hover {
+  border-color: var(--nl-accent);
+}
+
+/* ---- Dot indicator ---- */
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* ---- 404 page ---- */
+.not-found {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
