@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
     Layers, Eye, EyeOff, MapPin, Camera, Info, DoorOpen, Car,
     Utensils, ArrowUpDown, ChevronDown, ChevronRight, Plus,
@@ -27,25 +26,14 @@ export default function EditorSidebar({
     );
 
     return (
-        <motion.div
-            initial={{ x: -280, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.4 }}
-            className="editor-sidebar d-flex flex-column h-100"
-        >
+        <div className="editor-sidebar d-flex flex-column h-100">
             {/* Header */}
             <div className="p-3 border-bottom" style={{ borderColor: 'var(--nl-border) !important' }}>
                 <div className="d-flex align-items-center gap-2 mb-3">
-                    <div
-                        className="d-flex align-items-center justify-content-center rounded"
-                        style={{ width: 24, height: 24, background: 'linear-gradient(135deg, var(--nl-accent), var(--nl-purple))' }}
-                    >
-                        <Settings size={12} color="#fff" />
-                    </div>
+                    <Settings size={14} className="text-muted" />
                     <span className="fw-bold small">Editor Panel</span>
                 </div>
 
-                {/* Tabs */}
                 <div className="d-flex gap-1 p-1 rounded" style={{ background: 'rgba(255,255,255,0.03)' }}>
                     <button
                         className={`sidebar-tab flex-fill d-flex align-items-center justify-content-center gap-1 ${activeTab === 'layers' ? 'active' : ''}`}
@@ -66,7 +54,6 @@ export default function EditorSidebar({
             <div className="flex-grow-1 overflow-auto p-3">
                 {activeTab === 'layers' ? (
                     <div>
-                        {/* Floor Plans */}
                         <button
                             onClick={() => toggle('layers')}
                             className="btn btn-sm w-100 d-flex align-items-center justify-content-between p-2 text-start border-0"
@@ -83,10 +70,10 @@ export default function EditorSidebar({
                                         className="layer-item d-flex align-items-center gap-2"
                                         onClick={() => onToggleLayer?.(layer.id)}
                                     >
-                                        <Layers size={14} className="text-accent" />
+                                        <Layers size={14} className="text-info" />
                                         <span className="flex-grow-1 small">{layer.name}</span>
                                         {layer.visible
-                                            ? <Eye size={14} className="text-accent" />
+                                            ? <Eye size={14} className="text-info" />
                                             : <EyeOff size={14} className="text-muted" />
                                         }
                                     </div>
@@ -138,14 +125,14 @@ export default function EditorSidebar({
                                         <span className="dot" style={{ background: m.color }} />
                                         <div className="flex-grow-1 overflow-hidden">
                                             <div className="small fw-medium text-truncate">{m.title}</div>
-                                            <div className="text-muted" style={{ fontSize: 10, fontFamily: 'monospace' }}>
+                                            <div className="text-muted" style={{ fontSize: 10 }}>
                                                 {m.type === '360' ? '360° View' : 'Info Point'}
                                             </div>
                                         </div>
                                         <button
                                             onClick={(e) => { e.stopPropagation(); onDeleteMarker?.(m.id); }}
-                                            className="btn btn-sm p-1 text-muted opacity-50"
-                                            style={{ opacity: 0.4 }}
+                                            className="btn btn-sm p-1 text-muted"
+                                            style={{ opacity: 0.5 }}
                                         >
                                             <Trash2 size={13} />
                                         </button>
@@ -178,12 +165,7 @@ export default function EditorSidebar({
                                                         onMarkerDragStart?.(lib);
                                                     }}
                                                 >
-                                                    <div
-                                                        className="d-flex align-items-center justify-content-center mx-auto rounded mb-1"
-                                                        style={{ width: 32, height: 32, background: `${lib.color}20` }}
-                                                    >
-                                                        <Icon size={16} style={{ color: lib.color }} />
-                                                    </div>
+                                                    <Icon size={16} style={{ color: lib.color }} className="mb-1" />
                                                     <div className="text-muted" style={{ fontSize: 10 }}>{lib.name}</div>
                                                 </div>
                                             </div>
@@ -191,7 +173,7 @@ export default function EditorSidebar({
                                     })}
                                 </div>
                                 <p className="text-muted text-center mt-2" style={{ fontSize: 10 }}>
-                                    Drag and drop markers onto the map
+                                    Drag markers onto the map
                                 </p>
                             </>
                         )}
@@ -206,6 +188,6 @@ export default function EditorSidebar({
                     <span className="text-muted">Editor Active</span>
                 </div>
             </div>
-        </motion.div>
+        </div>
     );
 }

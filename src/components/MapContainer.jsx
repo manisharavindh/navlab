@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Eye, Navigation } from 'lucide-react';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
@@ -60,14 +59,6 @@ export default function MapContainer({
                     labelLayerId
                 );
             }
-
-            map.current.setFog({
-                color: 'rgba(10, 10, 15, 0.8)',
-                'high-color': 'rgba(13, 202, 240, 0.05)',
-                'space-color': '#0f1117',
-                'horizon-blend': 0.1,
-                'star-intensity': 0.2,
-            });
         });
 
         map.current.on('click', (e) => {
@@ -91,18 +82,18 @@ export default function MapContainer({
 
         markers.forEach((md) => {
             const el = document.createElement('div');
-            el.style.cssText = 'width:36px;height:36px;cursor:pointer;position:relative;display:flex;align-items:center;justify-content:center;';
+            el.style.cssText = 'width:32px;height:32px;cursor:pointer;position:relative;display:flex;align-items:center;justify-content:center;';
 
             const dot = document.createElement('div');
-            dot.style.cssText = `width:14px;height:14px;border-radius:50%;background:${md.color || '#0dcaf0'};border:2.5px solid #fff;box-shadow:0 0 10px ${md.color || '#0dcaf0'}80;transition:transform .2s;z-index:2;`;
+            dot.style.cssText = `width:12px;height:12px;border-radius:50%;background:${md.color || '#0dcaf0'};border:2px solid #fff;z-index:2;`;
 
             const pulse = document.createElement('div');
             pulse.className = 'marker-pulse-ring';
-            pulse.style.cssText = `position:absolute;width:36px;height:36px;border-radius:50%;border:2px solid ${md.color || '#0dcaf0'}40;z-index:1;`;
+            pulse.style.cssText = `position:absolute;width:32px;height:32px;border-radius:50%;border:2px solid ${md.color || '#0dcaf0'}30;z-index:1;`;
 
             if (md.type === '360') {
                 const badge = document.createElement('div');
-                badge.style.cssText = `position:absolute;top:-6px;right:-6px;width:16px;height:16px;border-radius:50%;background:${md.color || '#0dcaf0'};display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:#fff;z-index:3;`;
+                badge.style.cssText = `position:absolute;top:-5px;right:-5px;width:14px;height:14px;border-radius:50%;background:${md.color || '#0dcaf0'};display:flex;align-items:center;justify-content:center;font-size:6px;font-weight:700;color:#fff;z-index:3;`;
                 badge.textContent = '360';
                 el.appendChild(badge);
             }
@@ -110,14 +101,8 @@ export default function MapContainer({
             el.appendChild(pulse);
             el.appendChild(dot);
 
-            el.addEventListener('mouseenter', () => {
-                dot.style.transform = 'scale(1.3)';
-                setHoveredMarker(md);
-            });
-            el.addEventListener('mouseleave', () => {
-                dot.style.transform = 'scale(1)';
-                setHoveredMarker(null);
-            });
+            el.addEventListener('mouseenter', () => setHoveredMarker(md));
+            el.addEventListener('mouseleave', () => setHoveredMarker(null));
             el.addEventListener('click', (e) => {
                 e.stopPropagation();
                 onMarkerClick?.(md);
@@ -136,49 +121,38 @@ export default function MapContainer({
             <div ref={mapContainer} className="position-absolute top-0 start-0 w-100 h-100" />
 
             {/* Loading */}
-            <AnimatePresence>
-                {!mapLoaded && (
-                    <motion.div
-                        initial={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-                        style={{ background: 'var(--nl-bg)', zIndex: 10 }}
-                    >
-                        <div className="text-center">
-                            <div className="spinner-border text-info spinner-border-sm mb-2" role="status" />
-                            <p className="text-muted small mb-0" style={{ fontFamily: 'monospace' }}>
-                                Initializing map engine...
-                            </p>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            {!mapLoaded && (
+                <div
+                    className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+                    style={{ background: 'var(--nl-bg)', zIndex: 10 }}
+                >
+                    <div className="text-center">
+                        <div className="spinner-border spinner-border-sm text-secondary mb-2" role="status" />
+                        <p className="text-muted small mb-0" style={{ fontFamily: 'monospace' }}>Loading map...</p>
+                    </div>
+                </div>
+            )}
 
             {/* Hover tooltip */}
-            <AnimatePresence>
-                {hoveredMarker && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 8 }}
-                        className="position-absolute bottom-0 start-50 translate-middle-x mb-3"
-                        style={{ zIndex: 20, pointerEvents: 'none' }}
-                    >
-                        <div className="map-overlay d-flex align-items-center gap-2 px-3 py-2">
-                            <span className="dot" style={{ background: hoveredMarker.color, width: 10, height: 10 }} />
-                            <div>
-                                <div className="fw-semibold small">{hoveredMarker.title}</div>
-                                <div className="text-muted" style={{ fontSize: 11 }}>{hoveredMarker.description?.slice(0, 50)}</div>
-                            </div>
-                            {hoveredMarker.type === '360' && (
-                                <span className="badge badge-accent ms-2" style={{ fontSize: 10 }}>
-                                    <Eye size={10} className="me-1" />360°
-                                </span>
-                            )}
+            {hoveredMarker && (
+                <div
+                    className="position-absolute bottom-0 start-50 translate-middle-x mb-3"
+                    style={{ zIndex: 20, pointerEvents: 'none' }}
+                >
+                    <div className="map-overlay d-flex align-items-center gap-2 px-3 py-2">
+                        <span className="dot" style={{ background: hoveredMarker.color, width: 10, height: 10 }} />
+                        <div>
+                            <div className="fw-medium small">{hoveredMarker.title}</div>
+                            <div className="text-muted" style={{ fontSize: 11 }}>{hoveredMarker.description?.slice(0, 50)}</div>
                         </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                        {hoveredMarker.type === '360' && (
+                            <span className="badge bg-secondary ms-2" style={{ fontSize: 10 }}>
+                                <Eye size={10} className="me-1" />360°
+                            </span>
+                        )}
+                    </div>
+                </div>
+            )}
 
             {/* Coords */}
             {interactive && mapLoaded && (
